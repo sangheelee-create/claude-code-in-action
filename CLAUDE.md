@@ -34,6 +34,8 @@ UIGen is an AI-powered React component generator. Users describe a component in 
 
 `getLanguageModel()` (`src/lib/provider.ts`) — returns `anthropic("claude-haiku-4-5")` when `ANTHROPIC_API_KEY` is set, otherwise falls back to `MockLanguageModel` which generates static counter/form/card components without calling the API. The mock limits to 4 `maxSteps` vs 40 for real.
 
+`generationPrompt` (`src/lib/prompts/generation.tsx`) — the system prompt injected into every `/api/chat` request. Contains behavioral rules (file conventions, import aliases) and Visual Design Principles that guide the model away from generic Tailwind aesthetics toward distinctive, opinionated designs. Edit this file when output style or component generation behavior needs tuning. To validate changes, generate the same neutral request (e.g. "create a pricing card") before and after — output should reflect distinctive aesthetics (dark/saturated backgrounds, intentional typography, non-default button styles), not a plain white Tailwind template.
+
 ### Auth
 
 JWT-based sessions via `jose`, stored in an `httpOnly` cookie (`auth-token`). `JWT_SECRET` env var defaults to `"development-secret-key"`. `src/middleware.ts` protects `/[projectId]` routes. Anonymous users can use the app but projects are not persisted.
